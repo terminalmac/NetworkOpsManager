@@ -61,8 +61,34 @@ public class Main {
                 // Remove device logic here
                 break;
             case 3:
-                System.out.println("Search Device selected.");
-                // Search device logic here
+                System.out.println();
+                System.out.println("--- Search Device ---");
+
+                System.out.print("Enter device name: ");
+                String searchName = scanner.nextLine();
+
+                boolean found = false;
+
+                for (NetworkDevice device : devices) {
+
+                    if (device.getDeviceName().equalsIgnoreCase(searchName)) {
+
+                        found = true;
+
+                        System.out.println();
+                        System.out.println("Device found:");
+                        System.out.println("Device Name: " + device.getDeviceName());
+                        System.out.println("IP Address: " + device.getIpAddress());
+                        System.out.println("MAC Address: " + device.getMacAddress());
+        
+                        break;
+                    }
+
+                    if (!found) {
+                        System.out.println("No device found with the name: " + searchName);
+                    }
+                }
+
                 break;
             case 4:
                 System.out.println();
