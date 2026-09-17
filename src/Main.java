@@ -1,21 +1,14 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
+        
 
         Scanner scanner = new Scanner(System.in);
 
-        NetworkDevice testDevice = new NetworkDevice(
-            "pfSense-FW01",
-            "192.168.1.1",
-            "AA:BB:CC:DD:EE:FF"
-        );
-
-        System.out.println("Device: " + testDevice.getDeviceName());
-        System.out.println("IP Address: " + testDevice.getIpAddress());
-        System.out.println("MAC Address: " + testDevice.getMacAddress());
-        System.out.println();
+        ArrayList<NetworkDevice> devices = new ArrayList<>();
         
         int choice = 0;
 
@@ -36,10 +29,32 @@ public class Main {
 
             choice = scanner.nextInt();
 
+            scanner.nextLine(); // Consume the newline character
+
         switch (choice) {
             case 1:
-                System.out.println("Add Device selected.");
-                // Add device logic here
+                System.out.println();
+                System.out.println("--- Add Network Device ---");
+
+                System.out.print("Device Name: ");
+                String deviceName = scanner.nextLine();
+
+                System.out.print("IP Address: ");
+                String ipAddress = scanner.nextLine();
+
+                System.out.print("MAC Address: ");
+                String macAddress = scanner.nextLine();
+
+                NetworkDevice newDevice = new NetworkDevice(
+                    deviceName,
+                    ipAddress,
+                    macAddress
+                );
+
+                devices.add(newDevice);
+
+                System.out.println("Device added successfully!");
+
                 break;
             case 2:
                 System.out.println("Remove Device selected.");
