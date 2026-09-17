@@ -65,8 +65,21 @@ public class Main {
                 // Search device logic here
                 break;
             case 4:
-                System.out.println("List Devices selected.");
-                // List devices logic here
+                System.out.println();
+                System.out.println("--- Network Devices ---");
+
+                if (devices.isEmpty()) {
+                    System.out.println("No devices found.");
+                } else {
+                    for (NetworkDevice device : devices) {
+                        System.out.println("Device Name: " + device.getDeviceName());
+                        System.out.println("IP Address: " + device.getIpAddress());
+                        System.out.println("MAC Address: " + device.getMacAddress());
+                        System.out.println();
+                    }
+                    System.out.println("Total Devices: " + devices.size());
+                }
+
                 break;
             case 5:
                 System.out.println("Update Device selected.");
