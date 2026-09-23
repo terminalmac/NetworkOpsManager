@@ -56,10 +56,33 @@ public class Main {
                 System.out.println("Device added successfully!");
 
                 break;
+
             case 2:
-                System.out.println("Remove Device selected.");
-                // Remove device logic here
+                System.out.println();
+                System.out.println("--- Remove Device ---");
+                
+                System.out.print("Enter device name: ");
+                String removeName = scanner.nextLine();
+
+                NetworkDevice deviceToRemove = null;
+
+                for (NetworkDevice device : devices) {
+
+                    if (device.getDeviceName().equalsIgnoreCase(removeName)) {
+                        deviceToRemove = device;
+                        break;
+                    }
+                }
+
+                    if (deviceToRemove != null) {
+                        devices.remove(deviceToRemove);
+                        System.out.println("Device removed successfully!");
+                    } else {
+                        System.out.println("No device found with that name: " + removeName);
+                    }
+
                 break;
+
             case 3:
                 System.out.println();
                 System.out.println("--- Search Device ---");
@@ -90,6 +113,7 @@ public class Main {
                 }
 
                 break;
+
             case 4:
                 System.out.println();
                 System.out.println("--- Network Devices ---");
@@ -107,13 +131,16 @@ public class Main {
                 }
 
                 break;
+
             case 5:
                 System.out.println("Update Device selected.");
                 // Update device logic here
                 break;
+
             case 6:
                 System.out.println("Exiting...");
                 break;
+                
             default:
                 System.out.println("Invalid option. Please try again.");
         }
