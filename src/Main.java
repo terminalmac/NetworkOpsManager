@@ -133,8 +133,52 @@ public class Main {
                 break;
 
             case 5:
-                System.out.println("Update Device selected.");
-                // Update device logic here
+                System.out.println();
+                System.out.println("--- Update Device ---");
+
+                System.out.print("Enter device name: ");
+                String updateName = scanner.nextLine();
+
+                NetworkDevice deviceToUpdate = null;
+
+                for (NetworkDevice device : devices) {
+
+                    if (device.getDeviceName().equalsIgnoreCase(updateName)) {
+                        deviceToUpdate = device;
+                        break;
+                    }
+                }
+
+                if (deviceToUpdate != null) {
+                    System.out.println("Device found!");
+                    
+                    System.out.println();
+                    System.out.println("Current Device Information:");
+                    System.out.println("Device Name: " + deviceToUpdate.getDeviceName());
+                    System.out.println("IP Address: " + deviceToUpdate.getIpAddress());
+                    System.out.println("MAC Address: " + deviceToUpdate.getMacAddress());
+
+                    System.out.println();
+
+                    System.out.println("Enter new device name: ");
+                    String newDeviceName = scanner.nextLine();
+
+                    System.out.print("Enter new IP address: ");
+                    String newIpAddress = scanner.nextLine();
+
+                    System.out.print("Enter new MAC address: ");
+                    String newMacAddress = scanner.nextLine();
+
+                    deviceToUpdate.setDeviceName(newDeviceName);
+                    deviceToUpdate.setIpAddress(newIpAddress);
+                    deviceToUpdate.setMacAddress(newMacAddress);
+
+                    System.out.println("Device updated successfully.");
+
+                } else {
+                    System.out.println("No device found with the name: " + updateName);
+                }
+
                 break;
 
             case 6:
