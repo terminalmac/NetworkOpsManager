@@ -11,6 +11,7 @@ This project is being developed as a hands-on software engineering project to ap
 - Remove network devices by name
 - Search for devices by name
 - List all managed network devices
+- Update existing network devices
 - Case-insensitive device searching
 - Display device name, IP address, and MAC address
 - Store multiple network devices using an `ArrayList`
@@ -19,14 +20,15 @@ This project is being developed as a hands-on software engineering project to ap
 - Menu option handling using a `switch` statement
 - Empty device-list handling
 - Device-not-found handling
+- Complete CRUD functionality
 
 ## Planned Features
 
-- Update device information
+- Refactor device-management logic into reusable methods
 - Prevent duplicate devices
 - IP address validation
 - MAC address validation
-- Improved input validation
+- Improved menu input validation
 - Exception handling
 - Persistent device storage
 - Unit testing
@@ -75,6 +77,7 @@ This project is being developed as a hands-on software engineering project to ap
 - Device removal
 - Device searching
 - Device listing
+- Device updates
 - In-memory device storage
 
 ### NetworkDevice.java
@@ -185,13 +188,7 @@ Example:
     IP Address: 192.168.1.1
     MAC Address: AA:BB:CC:DD:EE:FF
 
-Device-name searches are case-insensitive, so searches such as:
-
-    pfSense-FW01
-    PFSENSE-FW01
-    pfsense-fw01
-
-will match the same device.
+Device-name searches are case-insensitive.
 
 If the requested device does not exist:
 
@@ -217,9 +214,36 @@ If no devices have been added:
 
     No devices found.
 
-## Concepts Practiced
+## Updating a Device
 
-NetworkOpsManager currently demonstrates several core Java and software engineering concepts.
+Selecting option `5` allows the user to search for an existing device and modify its information.
+
+Example:
+
+    --- Update Device ---
+
+    Enter device name: pfSense-FW01
+
+    Device found!
+
+    Current Device Information:
+    Device Name: pfSense-FW01
+    IP Address: 192.168.1.1
+    MAC Address: AA:BB:CC:DD:EE:FF
+
+    Enter new device name: pfSense-Firewall
+    Enter new IP address: 192.168.1.254
+    Enter new MAC address: AA:BB:CC:DD:EE:FF
+
+    Device updated successfully!
+
+The application uses the `NetworkDevice` setters to modify the existing object stored in the device collection.
+
+If the requested device does not exist:
+
+    No device found with the name: Cisco-Router
+
+## Concepts Practiced
 
 ### Java Fundamentals
 
@@ -250,6 +274,7 @@ NetworkOpsManager currently demonstrates several core Java and software engineer
 - Removing objects from collections
 - Iterating through collections
 - Searching collections
+- Modifying objects stored in collections
 - Checking for empty collections
 
 ### String Handling
@@ -262,21 +287,23 @@ NetworkOpsManager currently demonstrates several core Java and software engineer
 - Command-line interface design
 - Menu-driven applications
 - User input handling
-- Basic CRUD operations
+- CRUD operations
 - Device-not-found handling
 - In-memory data management
 
 ## CRUD Progress
 
-NetworkOpsManager is progressively implementing the four primary CRUD operations:
+NetworkOpsManager now implements all four primary CRUD operations:
 
 | Operation | Feature | Status |
 | --- | --- | --- |
 | Create | Add Device | ✅ Implemented |
 | Read | List Devices | ✅ Implemented |
 | Read | Search Device | ✅ Implemented |
-| Update | Update Device | 🚧 Planned |
+| Update | Update Device | ✅ Implemented |
 | Delete | Remove Device | ✅ Implemented |
+
+**CLI CRUD functionality is complete.**
 
 ## Development Progress
 
@@ -303,35 +330,63 @@ NetworkOpsManager is progressively implementing the four primary CRUD operations
 - Added in-memory storage for multiple network devices
 - Added enhanced `for` loops for collection traversal
 
-### Phase 4 - Device Management
+### Phase 4 - CRUD Device Management
 
 - Implemented Add Device
 - Implemented List Devices
 - Implemented Search Device
 - Implemented Remove Device
+- Implemented Update Device
 - Added case-insensitive device-name matching
 - Added empty-list handling
 - Added device-not-found handling
 
+### Phase 5 - Code Refactoring
+
+🚧 Next
+
+The next phase will focus on improving the application's internal structure by moving device-management functionality out of the main application loop and into reusable methods.
+
 ## Next Milestone
 
-Implement **Update Device** so users can search for an existing network device and modify its:
+Refactor `Main.java` so each major operation is handled by its own method.
 
-- Device name
-- IP address
-- MAC address
+Instead of keeping all application logic inside the `switch` statement:
 
-Completing Update Device will provide full CRUD functionality for the command-line version of NetworkOpsManager.
+    case 1:
+        // Large amount of Add Device code
 
-After completing CRUD functionality, the application will be refactored to move device-management logic out of `Main.java` and into reusable methods and classes.
+the application will move toward:
+
+    case 1:
+        addDevice(scanner, devices);
+        break;
+
+    case 2:
+        removeDevice(scanner, devices);
+        break;
+
+    case 3:
+        searchDevice(scanner, devices);
+        break;
+
+    case 4:
+        listDevices(devices);
+        break;
+
+    case 5:
+        updateDevice(scanner, devices);
+        break;
+
+This will introduce method design, parameters, return types, code reuse, and separation of concerns.
 
 ## Long-Term Goals
 
-NetworkOpsManager will progressively evolve from a simple Java command-line application into a backend network management service.
+NetworkOpsManager will progressively evolve from a Java command-line application into a backend network management service.
 
 The planned development path includes:
 
-1. Complete CLI CRUD functionality
+1. ~~Complete CLI CRUD functionality~~ ✅
 2. Refactor application logic
 3. Input validation
 4. Exception handling
@@ -362,8 +417,10 @@ The long-term architecture is expected to resemble:
 
 🚧 **Active Development**
 
-NetworkOpsManager currently supports creating, listing, searching, and removing network devices using in-memory storage.
+NetworkOpsManager now supports full CRUD functionality for network devices using in-memory storage.
 
-The next milestone is implementing device updates to complete CRUD functionality.
+Users can create, search, list, update, and delete network devices containing a device name, IP address, and MAC address.
 
 Device information is currently stored in memory and is not persisted after the application closes.
+
+The next development phase will focus on refactoring the application into reusable methods before introducing input validation, testing, and persistent storage.
