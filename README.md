@@ -1,55 +1,60 @@
 # NetworkOpsManager
 
-NetworkOpsManager is a Java-based network device management application designed to track and manage network infrastructure through a command-line interface.
+NetworkOpsManager is a Java-based command-line application designed to manage network devices and their information.
 
-This project is being developed as a hands-on software engineering project to apply Java fundamentals, object-oriented programming, data structures, testing, databases, APIs, and application development to a real-world network management use case.
+The project serves as a hands-on software engineering portfolio project, combining Java fundamentals, object-oriented programming, data structures, and software development practices with real-world network infrastructure management.
 
-## Current Features
+The long-term goal is to evolve NetworkOpsManager into a full-stack network management application using Spring Boot, PostgreSQL, REST APIs, and Docker.
 
-- Interactive command-line interface
-- Add network devices through user input
+## Features
+
+### Implemented Features
+
+- Interactive command-line interface (CLI)
+- Add network devices
 - Remove network devices by name
 - Search for devices by name
-- List all managed network devices
-- Update existing network devices
+- List all stored network devices
+- Update existing device information
 - Case-insensitive device searching
-- Display device name, IP address, and MAC address
-- Store multiple network devices using an `ArrayList`
-- Network device object model
-- Continuous application menu using a `while` loop
-- Menu option handling using a `switch` statement
+- Display device names, IP addresses, and MAC addresses
+- In-memory device storage using `ArrayList`
+- Reusable methods for CRUD operations
+- Shared device lookup and display methods
+- Menu input validation for non-numeric entries
 - Empty device-list handling
 - Device-not-found handling
-- Complete CRUD functionality
+- Maven project configuration
 
-## Planned Features
+### Planned Features
 
-- Refactor device-management logic into reusable methods
-- Prevent duplicate devices
-- IP address validation
+- Separate `DeviceManager` class
+- Duplicate device prevention
+- IPv4 address validation
 - MAC address validation
-- Improved menu input validation
-- Exception handling
-- Persistent device storage
-- Unit testing
-- Database integration
-- REST API
+- Device name validation
+- Persistent JSON file storage
+- Automated unit testing with JUnit
+- Improved exception handling
+- PostgreSQL database integration
+- REST API using Spring Boot
 - Authentication and authorization
-- Containerized deployment
+- Docker containerization
 
 ## Technologies
 
-### Currently Used
+### Current
 
-- Java
+- Java 17+
+- Apache Maven
 - Git
 - GitHub
 - Visual Studio Code
 
 ### Planned
 
-- Maven
-- JUnit
+- JUnit 5
+- JSON serialization library
 - Spring Boot
 - PostgreSQL
 - REST APIs
@@ -57,370 +62,361 @@ This project is being developed as a hands-on software engineering project to ap
 
 ## Project Structure
 
-    NetworkOpsManager/
-    ├── src/
-    │   ├── Main.java
-    │   └── NetworkDevice.java
-    ├── .gitignore
-    └── README.md
+```text
+NetworkOpsManager/
+├── src/
+│   ├── Main.java
+│   └── NetworkDevice.java
+├── pom.xml
+├── README.md
+└── .gitignore
+```
 
 ### Main.java
 
-`Main.java` currently handles:
+The main application currently contains:
 
-- Application startup
-- Command-line menu
-- User input
-- Application loop
-- Menu selection
-- Device creation
-- Device removal
-- Device searching
-- Device listing
-- Device updates
-- In-memory device storage
+- CLI menu and application loop
+- User input handling
+- CRUD operation methods
+- Reusable device search method
+- Reusable device display method
+- Basic menu input validation
+
+The application has been refactored so that individual CRUD operations are no longer implemented directly inside the `switch` statement.
 
 ### NetworkDevice.java
 
-`NetworkDevice.java` defines the network device model.
-
-Each network device currently contains:
+Represents an individual network device with three properties:
 
 - Device name
 - IP address
 - MAC address
 
-The class uses private fields, a constructor, getters, and setters to demonstrate object-oriented programming and encapsulation.
+The class uses private fields, a constructor, getters, and setters to demonstrate encapsulation and object-oriented programming.
+
+### pom.xml
+
+Defines the Maven project configuration, Java compilation settings, and executable JAR packaging.
 
 ## Getting Started
 
 ### Prerequisites
 
-To compile and run NetworkOpsManager, you will need:
+- Java Development Kit (JDK) 17 or newer
+- Apache Maven
+- Git (optional, for version control)
 
-- Java Development Kit (JDK)
-- Git
+Verify your Java installation:
 
-Verify that Java is installed:
+```powershell
+java -version
+javac -version
+```
 
-    java -version
+Verify Maven:
 
-Verify that the Java compiler is installed:
+```powershell
+mvn -version
+```
 
-    javac -version
+### Build the Application
 
-### Compile
+Open a terminal in the project root directory and run:
 
-From the project root:
+```powershell
+mvn clean package
+```
 
-    javac src/Main.java src/NetworkDevice.java
+Maven will compile the project and generate an executable JAR file.
 
-### Run
+### Run the Application
 
-    java -cp src Main
+```powershell
+java -jar target/networkopsmanager.jar
+```
 
-## Usage
+## Application Menu
 
-When the application starts, the following menu is displayed:
+```text
+==============================
+     NetworkOps Manager
+==============================
 
-    ==============================
-         NetworkOps Manager
-    ==============================
+1. Add Device
+2. Remove Device
+3. Search Device
+4. List Devices
+5. Update Device
+6. Exit
 
-    1. Add Device
-    2. Remove Device
-    3. Search Device
-    4. List Devices
-    5. Update Device
-    6. Exit
+Select an option:
+```
 
-    Select an option:
+## Usage Examples
 
-## Adding a Device
+### Add Device
 
-Selecting option `1` allows the user to add a network device.
+```text
+--- Add Network Device ---
 
-Example:
+Device Name: pfSense-FW01
+IP Address: 192.168.1.1
+MAC Address: AA:BB:CC:DD:EE:FF
 
-    --- Add Network Device ---
+Device added successfully!
+```
 
-    Device Name: pfSense-FW01
-    IP Address: 192.168.1.1
-    MAC Address: AA:BB:CC:DD:EE:FF
+### Remove Device
 
-    Device added successfully!
+```text
+--- Remove Device ---
 
-The application creates a new `NetworkDevice` object using the supplied information and stores it in an `ArrayList<NetworkDevice>`.
+Enter device name: pfSense-FW01
+Device removed successfully!
+```
 
-## Removing a Device
+### Search Device
 
-Selecting option `2` allows the user to remove an existing device by name.
+```text
+--- Search Device ---
 
-Example:
+Enter device name: pfsense-fw01
 
-    --- Remove Device ---
+Device found!
+Device Name: pfSense-FW01
+IP Address: 192.168.1.1
+MAC Address: AA:BB:CC:DD:EE:FF
+```
 
-    Enter device name: PiHole-01
+Searching is case-insensitive.
 
-    Device removed successfully!
+### List Devices
 
-The application searches the device collection for a matching `NetworkDevice` and removes it from the `ArrayList`.
+```text
+--- Network Devices ---
 
-If the requested device does not exist:
+Device Name: pfSense-FW01
+IP Address: 192.168.1.1
+MAC Address: AA:BB:CC:DD:EE:FF
 
-    No device found with the name: Cisco-Router
+Device Name: PiHole-01
+IP Address: 192.168.50.120
+MAC Address: 11:22:33:44:55:66
 
-Device-name matching is case-insensitive.
+Total Devices: 2
+```
 
-## Searching for a Device
+### Update Device
 
-Selecting option `3` allows the user to search for an existing device by name.
+```text
+--- Update Device ---
 
-Example:
+Enter device name: pfSense-FW01
 
-    --- Search Device ---
+Current Device Information:
+Device Name: pfSense-FW01
+IP Address: 192.168.1.1
+MAC Address: AA:BB:CC:DD:EE:FF
 
-    Enter device name: pfsense-fw01
+Enter new device name: pfSense-Firewall
+Enter new IP address: 192.168.1.254
+Enter new MAC address: AA:BB:CC:DD:EE:FF
 
-    Device found!
+Device updated successfully!
+```
 
-    Device Name: pfSense-FW01
-    IP Address: 192.168.1.1
-    MAC Address: AA:BB:CC:DD:EE:FF
+## CRUD Functionality
 
-Device-name searches are case-insensitive.
+| Operation | Feature | Status |
+|---|---|---|
+| Create | Add Device | Complete |
+| Read | Search Device | Complete |
+| Read | List Devices | Complete |
+| Update | Update Device | Complete |
+| Delete | Remove Device | Complete |
 
-If the requested device does not exist:
+All core CRUD operations are implemented.
 
-    No device found with the name: Cisco-Router
+## Code Refactoring
 
-## Listing Devices
+The application originally contained all device-management logic directly inside the `main()` method.
 
-Selecting option `4` displays all devices currently stored in the application.
+To improve readability, maintainability, and code reuse, the application was refactored into smaller methods.
 
-Example:
+### CRUD Methods
 
-    --- Network Devices ---
+```java
+addDevice(scanner, devices);
+removeDevice(scanner, devices);
+searchDevice(scanner, devices);
+listDevices(devices);
+updateDevice(scanner, devices);
+```
 
-    Device Name: pfSense-FW01
-    IP Address: 192.168.1.1
-    MAC Address: AA:BB:CC:DD:EE:FF
+### Helper Methods
 
-    Device Name: PiHole-01
-    IP Address: 192.168.50.120
-    MAC Address: 11:22:33:44:55:66
+```java
+findDevice(devices, deviceName);
+printDevice(device);
+```
 
-If no devices have been added:
+The `findDevice()` method centralizes case-insensitive device lookup, eliminating duplicated search logic across Remove, Search, and Update operations.
 
-    No devices found.
+The `printDevice()` method centralizes device information formatting.
 
-## Updating a Device
+### Benefits of Refactoring
 
-Selecting option `5` allows the user to search for an existing device and modify its information.
+- Reduced code duplication
+- Improved readability
+- Easier debugging
+- Reusable functionality
+- More maintainable application structure
+- Better foundation for automated testing
 
-Example:
+## Input Handling
 
-    --- Update Device ---
+The application uses `Scanner` to process user input.
 
-    Enter device name: pfSense-FW01
+The main menu checks whether the user entered an integer before attempting to read a menu selection.
 
-    Device found!
+Invalid non-numeric input produces a message instead of causing an immediate `InputMismatchException`.
 
-    Current Device Information:
-    Device Name: pfSense-FW01
-    IP Address: 192.168.1.1
-    MAC Address: AA:BB:CC:DD:EE:FF
-
-    Enter new device name: pfSense-Firewall
-    Enter new IP address: 192.168.1.254
-    Enter new MAC address: AA:BB:CC:DD:EE:FF
-
-    Device updated successfully!
-
-The application uses the `NetworkDevice` setters to modify the existing object stored in the device collection.
-
-If the requested device does not exist:
-
-    No device found with the name: Cisco-Router
+Further validation for device names, IPv4 addresses, MAC addresses, and duplicate devices is planned.
 
 ## Concepts Practiced
 
 ### Java Fundamentals
 
 - Variables and data types
-- Strings
-- Boolean values
 - Conditional statements
+- `switch` statements
 - `while` loops
 - Enhanced `for` loops
-- `switch` statements
+- Methods and parameters
+- Return values
 - User input with `Scanner`
 
 ### Object-Oriented Programming
 
-- Classes
-- Objects
+- Classes and objects
 - Constructors
-- Private fields
 - Encapsulation
-- Getters
-- Setters
+- Private fields
+- Getters and setters
 - Object references
 
-### Collections
+### Data Structures
 
 - `ArrayList`
-- Adding objects to collections
-- Removing objects from collections
-- Iterating through collections
+- Adding and removing elements
+- Collection iteration
 - Searching collections
-- Modifying objects stored in collections
-- Checking for empty collections
+- Modifying existing objects
 
-### String Handling
+### Software Engineering
 
-- String comparison
-- Case-insensitive comparison using `equalsIgnoreCase()`
-
-### Application Development
-
-- Command-line interface design
-- Menu-driven applications
-- User input handling
 - CRUD operations
-- Device-not-found handling
-- In-memory data management
-
-## CRUD Progress
-
-NetworkOpsManager now implements all four primary CRUD operations:
-
-| Operation | Feature | Status |
-| --- | --- | --- |
-| Create | Add Device | ✅ Implemented |
-| Read | List Devices | ✅ Implemented |
-| Read | Search Device | ✅ Implemented |
-| Update | Update Device | ✅ Implemented |
-| Delete | Remove Device | ✅ Implemented |
-
-**CLI CRUD functionality is complete.**
+- Code refactoring
+- Separation of responsibilities
+- Reusable helper methods
+- Basic input validation
+- Maven build management
+- Git version control
+- Incremental development
 
 ## Development Progress
 
-### Phase 1 - Initial CLI
+### Phase 1 — CLI Foundation
 
-- Created command-line menu
-- Added user input with `Scanner`
-- Added continuous application loop
-- Added menu handling with `switch`
-- Added invalid menu-option handling
+- Created application menu
+- Implemented continuous menu loop
+- Added user input handling
+- Implemented `switch`-based menu selection
 
-### Phase 2 - Network Device Model
+### Phase 2 — Object-Oriented Programming
 
 - Created `NetworkDevice` class
-- Added private device fields
-- Added constructor
-- Added getters
-- Added setters
-- Introduced object-oriented programming and encapsulation
+- Implemented private fields
+- Added constructor, getters, and setters
 
-### Phase 3 - Device Collection
-
-- Added `ArrayList<NetworkDevice>`
-- Added in-memory storage for multiple network devices
-- Added enhanced `for` loops for collection traversal
-
-### Phase 4 - CRUD Device Management
+### Phase 3 — CRUD Functionality
 
 - Implemented Add Device
-- Implemented List Devices
-- Implemented Search Device
 - Implemented Remove Device
+- Implemented Search Device
+- Implemented List Devices
 - Implemented Update Device
-- Added case-insensitive device-name matching
-- Added empty-list handling
-- Added device-not-found handling
 
-### Phase 5 - Code Refactoring
+### Phase 4 — Maven Integration
 
-🚧 Next
+- Created `pom.xml`
+- Configured Java compilation
+- Configured executable JAR packaging
+- Successfully built the application using Maven
 
-The next phase will focus on improving the application's internal structure by moving device-management functionality out of the main application loop and into reusable methods.
+### Phase 5 — Code Refactoring
 
-## Next Milestone
+- Extracted CRUD operations into reusable methods
+- Created shared `findDevice()` method
+- Created shared `printDevice()` method
+- Corrected Search Device's not-found handling
+- Added non-numeric menu input handling
 
-Refactor `Main.java` so each major operation is handled by its own method.
+### Phase 6 — Device Management Architecture
 
-Instead of keeping all application logic inside the `switch` statement:
+**Next milestone**
 
-    case 1:
-        // Large amount of Add Device code
+- Create a dedicated `DeviceManager` class
+- Move device collection management out of `Main.java`
+- Separate user interface logic from application logic
+- Prepare for persistence and automated testing
 
-the application will move toward:
+## Development Roadmap
 
-    case 1:
-        addDevice(scanner, devices);
-        break;
+| Milestone | Status |
+|---|---|
+| CLI application | Complete |
+| NetworkDevice model | Complete |
+| CRUD functionality | Complete |
+| Maven integration | Complete |
+| Initial method refactoring | Implemented |
+| DeviceManager class | Planned |
+| Input validation | In progress |
+| JSON persistence | Planned |
+| JUnit testing | Planned |
+| PostgreSQL integration | Planned |
+| Spring Boot REST API | Planned |
+| Docker deployment | Planned |
 
-    case 2:
-        removeDevice(scanner, devices);
-        break;
+## Future Architecture
 
-    case 3:
-        searchDevice(scanner, devices);
-        break;
+The long-term goal is to evolve NetworkOpsManager into a backend network management service.
 
-    case 4:
-        listDevices(devices);
-        break;
+```text
+Client Application
+        |
+        v
+Spring Boot REST API
+        |
+        v
+Device Management Service
+        |
+        v
+PostgreSQL Database
+```
 
-    case 5:
-        updateDevice(scanner, devices);
-        break;
-
-This will introduce method design, parameters, return types, code reuse, and separation of concerns.
-
-## Long-Term Goals
-
-NetworkOpsManager will progressively evolve from a Java command-line application into a backend network management service.
-
-The planned development path includes:
-
-1. ~~Complete CLI CRUD functionality~~ ✅
-2. Refactor application logic
-3. Input validation
-4. Exception handling
-5. Automated testing with JUnit
-6. Maven project management
-7. Persistent data storage
-8. PostgreSQL database integration
-9. Spring Boot
-10. REST API development
-11. Authentication and authorization
-12. Docker containerization
-13. Application deployment
-
-The long-term architecture is expected to resemble:
-
-    Client
-       |
-       v
-    REST API
-       |
-       v
-    Spring Boot Application
-       |
-       v
-    PostgreSQL Database
+This architecture will support persistent device management, automated testing, API access, and future integration with network monitoring tools.
 
 ## Development Status
 
-🚧 **Active Development**
+**Active Development**
 
-NetworkOpsManager now supports full CRUD functionality for network devices using in-memory storage.
+NetworkOpsManager currently provides full CRUD functionality through a Java command-line interface.
 
-Users can create, search, list, update, and delete network devices containing a device name, IP address, and MAC address.
+The project uses Maven for building and packaging and has undergone its first major code refactoring.
 
-Device information is currently stored in memory and is not persisted after the application closes.
+Device records are currently stored in memory and are lost when the application closes.
 
-The next development phase will focus on refactoring the application into reusable methods before introducing input validation, testing, and persistent storage.
+The next development phase will introduce a dedicated `DeviceManager` class, followed by input validation, JSON persistence, and automated testing.
+
